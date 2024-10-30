@@ -6,7 +6,7 @@ const port = process.env.PORT || 4000;
 
 
 const uri = process.env.URI;
-mongoose.connect(url, { useNewUrlParser: true });
+mongoose.connect(uri, { useNewUrlParser: true });
 const con = mongoose.connection;
 
 app.use(express.urlencoded({ extended: true }));

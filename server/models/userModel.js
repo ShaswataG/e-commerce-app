@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     passwordHash: {
         type: String,
@@ -15,20 +16,21 @@ const userSchema = new mongoose.Schema({
     },
     cart: {
         type: [mongoose.Schema.Types.ObjectId],
-        default: []
+        ref: "Cart"
     },
     orders: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "Order",
-        default: []
+        ref: "Order"
     },
     contact_number: {
         type: String,
-        required: true
+        required: true,
     },
     date_registered: {
         type: Date,
-        required: true,
         default: new Date()
     }
 })
+
+const userModel = new mongoose.model("User", userSchema);
+module.exports = userModel;
