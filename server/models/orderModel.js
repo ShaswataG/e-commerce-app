@@ -7,8 +7,9 @@ const orderSchema = new mongoose.Schema({
         required: true,
         index: true
     },
-    image_url: {
+    name: {
         type: String,
+        required: true
     },
     billing_address: {
         type: "String",
@@ -60,9 +61,6 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
         min: 1
-    },
-    manufacturing_date: {
-        type: Date,
     },
     order_date: {
         type: Date,

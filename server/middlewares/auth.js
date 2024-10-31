@@ -1,12 +1,15 @@
 const jwt = require("jsonwebtoken");
-require('dotenv').config()
 
-function isAuth(req, res, next) {
+const isAuth = async (req, res, next) => {
+    console.log('auth.js');
+    console.log('test1');
+
     const authHeader = req.get("Authorization");
     if (!authHeader) {
         req.isAuth = false;
         return next();
     }
+
 
     const token = authHeader.split(" ")[1];
     if (!token || token === "") {
@@ -17,14 +20,15 @@ function isAuth(req, res, next) {
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const decoded = await jwt.verify(token, process.env.SECRET_KEY);
         req.user = decoded;
         req.isAuth = true;
+        console.log('decoded: ', decoded);
         next();
     } catch (ex) {
         req.isAuth = false;
         next();
     }
 }
-
+console.log('3');
 module.exports = isAuth;
