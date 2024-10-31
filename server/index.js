@@ -1,24 +1,33 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require("cors");
 require('dotenv').config();
+const { productRouter } = require('./routes/productRoutes');
+const isAuth = require("./middleware/auth");
+
 const app = express();
 const port = process.env.PORT || 4000;
-
-
 const uri = process.env.URI;
-mongoose.connect(uri, { useNewUrlParser: true });
-const con = mongoose.connection;
 
+app.use(isAuth);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
+app.use('/api/products', productRouter);
 
-try {
-    con.on('open', () => {
-        console.log('Connected to the database successfully');
-    })
-} catch (error) {
-    console.error(error);
-}
+(async () => {
+    try {
+        await mongoose.connect(uri, { useNewUrlParser: true });
+        console.log('Connected to database');
+    } catch (error) {
+        console.error('Error connecting to database:', error);
+        // process.exit(1);
+    }
+})();
+
+app.all('*', (req, res) => {
+    res.status(500).json({ message: 'Invalid endpoint' });
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
