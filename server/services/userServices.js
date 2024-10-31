@@ -52,7 +52,9 @@ const loginUser = async (email, password) => {
         const data = {
             token: token,
             id: user.id,
-            isAdmin: user.is_admin
+            isAdmin: user.is_admin,
+            email: user.email,
+            contactNumber: user.contact_number
         };
         return data;
     } catch (error) {
