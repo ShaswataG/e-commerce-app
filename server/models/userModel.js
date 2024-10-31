@@ -1,34 +1,61 @@
 const mongoose = require('mongoose');
+const jwt = require("jsonwebtoken");
+require('dotenv').config()
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        minlength: 5,
+        maxlength: 50,
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        minlength: 5,
+        maxlength: 225,
     },
-    passwordHash: {
+    password_hash: {
         type: String,
-        required: true
+        required: true,
+        minlength: 5,
+        maxlength: 1024,
+    },
+    is_admin: {
+        type: Boolean,
+        default: false,
     },
     cart: {
-        type: [mongoose.Schema.Types.ObjectId],
-        default: []
+        type: [
+            {
+                product_id: mongoose.Schema.Types.ObjectId,
+                quantity: Number,
+            }
+        ],
+        ref: "Product"
     },
     orders: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "Order",
-        default: []
+        ref: "Order"
     },
     contact_number: {
         type: String,
-        required: true
+        required: true,
     },
     date_registered: {
         type: Date,
-        required: true,
         default: new Date()
     }
 })
+
+userSchema.methods.generateAuthToken = () => {
+    const token = jwt.sign(
+        { id: this._id, isAdmin: this.isAdmin },
+        process.env.SECRET_KEY
+    );
+    return token;
+};
+
+const userModel = new mongoose.model("User", userSchema);
+module.exports = userModel;

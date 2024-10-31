@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
     },
     image_url: {
         type: String,
+        required: false
     },
     price: {
         type: Number,
@@ -16,12 +17,11 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    manufacturing_date: {
-        type: Date,
-    },
     date_added: {
         type: Date,
-        required: true,
         default: new Date()
     }
 })
+
+const productModel = new mongoose.model("Product", productSchema);
+module.exports = productModel;
