@@ -57,7 +57,7 @@ export default function ProductListing() {
             <h1>Couldn't load products</h1>
             :
             products.map(product => (
-              <Product key={product.id} product={product} />
+              <Product key={product.id} product={product} showAdd />
             ))
         }
       </div>
