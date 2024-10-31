@@ -38,7 +38,7 @@ export default function Navbar() {
           {!isLoggedIn && <ButtonLink href='/register'>Register</ButtonLink>}
           {!isLoggedIn && <ButtonLink href='/login'>Sign in</ButtonLink>}
           {isLoggedIn && <Button onClick={logoutHandler}>Logout</Button>}
-          <GoToCart />
+          {isLoggedIn && <GoToCart />}
         </div>
       </div>
     </header>
