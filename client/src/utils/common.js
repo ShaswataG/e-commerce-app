@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const formatPrice = price => {
   return price.toLocaleString('en-IN', {
     style: 'currency',
@@ -7,3 +6,5 @@ export const formatPrice = price => {
     maximumFractionDigits: 2,
   })
 }
+
+export const getProductById= (products, id) => products.find(product => product.id === id)

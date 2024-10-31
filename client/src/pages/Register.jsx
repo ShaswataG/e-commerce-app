@@ -1,9 +1,10 @@
 import RegisterForm from '../components/User/RegisterForm'
+import PageTitle from '../components/shared/PageTitle'
 
 export default function Register() {
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Register</h1>
+      <PageTitle title="Register" />
       <RegisterForm />
     </div>
   )

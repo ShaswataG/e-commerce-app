@@ -6,10 +6,10 @@ const userRouter = express.Router();
 userRouter.route('/register')
     .post(userControllers.createUser);
 userRouter.route('/login')
-    .post(userControllers.loginUser);
+.post(userControllers.loginUser);
 userRouter.route('/cart')
     .get(isAuth, userControllers.getCart)
-    .post(isAuth, userControllers.addToCart);
+    .post(isAuth, userControllers.modifyCart);
 userRouter.route('/:id')
     .get(isAuth, userControllers.getUser);
 

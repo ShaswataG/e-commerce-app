@@ -29,6 +29,5 @@ const isAuth = async (req, res, next) => {
         req.isAuth = false;
         next();
     }
-}
-console.log('3');
+};
 module.exports = isAuth;

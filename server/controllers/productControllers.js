@@ -22,7 +22,7 @@ const getProduct = async (req, res) => {
 
 const getProducts = async (req, res) => {
     try {
-        const data = await productServices.getProducts();
+        const data = await productServices.getProducts(req.query);
         console.log('data: ', data);
         res.status(200).json({ data: data })
     } catch (error) {
