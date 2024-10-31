@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
-import { FaEdit, FaTrash } from 'react-icons/fa'
+import { FaTrash } from 'react-icons/fa'
 
 import Counter from './Counter'
 
