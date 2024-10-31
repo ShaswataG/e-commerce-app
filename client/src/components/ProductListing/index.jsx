@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Product from './Product'
-import ProductListingHeader from '../shared/ProductListingHeader'
+import ProductListingCount from '../shared/ProductListingCount'
 import { setProducts } from '../../redux/products'
 
 import Pagination from '../shared/Pagination'
@@ -38,7 +38,9 @@ export default function ProductListing() {
 
   return (
     <div className="relative w-full flex flex-col flex-grow gap-8">
-      <ProductListingHeader itemCount={products.length} />
+      <div className="relative w-full flex">
+      <ProductListingCount itemCount={products.length} />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {isLoading && <h1>Loading products...</h1>}
         {
