@@ -1,7 +1,7 @@
 import Search from '../components/shared/Search'
 
 export default function Home() {
-  const searchHandler = () => {}
+  const searchHandler = async () => {}
 
   return (
     <div className="flex flex-col h-full items-center gap-8 pb-8">

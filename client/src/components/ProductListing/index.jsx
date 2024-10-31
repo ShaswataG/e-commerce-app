@@ -1,7 +1,13 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+
 import Product from './Product'
 import ProductListingHeader from './ProductListingHeader'
 
 import Pagination from '../shared/Pagination'
+
+const baseUrl = process.env.REACT_APP_BASE_URL
 
 const products = [
   { id: 1, name: 'Product 1', price: 10.5 },
@@ -16,6 +22,18 @@ const products = [
 ]
 
 export default function ProductListing() {
+  
+  
+  
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(baseUrl + '/api/products')
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {}, [])
   return (
     <div className="relative w-full flex flex-col flex-grow gap-8">
       <ProductListingHeader itemCount={12} />

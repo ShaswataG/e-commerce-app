@@ -54,7 +54,8 @@ const loginUser = async (email, password) => {
             id: user.id,
             isAdmin: user.is_admin,
             email: user.email,
-            contactNumber: user.contact_number
+            contactNumber: user.contact_number,
+            cart: user.cart
         };
         return data;
     } catch (error) {

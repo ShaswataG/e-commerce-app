@@ -5,13 +5,19 @@ const userSlice = createSlice({
   initialState: {
     userId: '',
     isAdmin: false,
+    email: '',
+    contactNumber: '',
+    cart: []
   },
   reducers: {
     setUser: (state, action) => {
         state.userId = action.payload.userId;
-        state.isAdmin = action.payload.isAdmin
+        state.isAdmin = action.payload.isAdmin;
+        state.email = action.payload.email;
+        state.contactNumber = action.payload.contactNumber;
+        state.cart = action.payload.cart
     }
   }
 })
 
-export default userSlice
+export default userSlice.reducer;

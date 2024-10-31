@@ -3,8 +3,8 @@ import React from 'react'
 import { FaSearch } from 'react-icons/fa'
 
 function Search({ searchTerm, onSearch }) {
-  const handleChange = e => {
-    onSearch(e.target.value)
+  const handleChange = event => {
+    onSearch(event.target.value)
   }
 
   return (
