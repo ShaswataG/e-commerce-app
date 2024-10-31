@@ -1,7 +1,9 @@
 import { useState } from 'react'
-
+import axios from 'axios'
 import { validateUserRegistration } from '../../utils/validations/user'
 import TextField from '../shared/formFields/TextField'
+
+const baseUrl = process.env.REACT_APP_BASE_URL
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -18,20 +20,28 @@ export default function RegisterForm() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    const validationErrors = validateUserRegistration(formData)
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-    } else {
-      console.log('Registration successful', formData)
-      setFormData({
-        email: '',
-        name: '',
-        password: '',
-        confirmPassword: '',
-      })
-      setErrors({})
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault()
+      const validationErrors = validateUserRegistration(formData)
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors)
+      } else {
+        console.log('userData: ', formData);
+  
+        console.log('Registration successful', formData)
+        const response = await axios.post(baseUrl+'/api/users/register', formData);
+        console.log(response.data);
+        setFormData({
+          email: '',
+          name: '',
+          password: '',
+          confirmPassword: '',
+        })
+        setErrors({})
+      }
+    } catch (error) {
+      console.error('registration failed');
     }
   }
 

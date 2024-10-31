@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+  jwt: '',
   userId: '',
   isAdmin: false,
   email: '',
@@ -13,6 +14,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
+      state.jwt = action.payload.token
       state.userId = action.payload.userId
       state.isAdmin = action.payload.isAdmin
       state.email = action.payload.email
