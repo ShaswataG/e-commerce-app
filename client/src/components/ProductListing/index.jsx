@@ -10,18 +10,6 @@ import Pagination from '../shared/Pagination'
 
 const baseUrl = process.env.REACT_APP_BASE_URL
 
-// const products = [
-//   { id: 1, name: 'Product 1', price: 10.5 },
-//   { id: 2, name: 'Product 2', price: 15.75 },
-//   { id: 3, name: 'Product 3', price: 20 },
-//   { id: 4, name: 'Product 4', price: 25.99 },
-//   { id: 5, name: 'Product 5', price: 30.44 },
-//   { id: 6, name: 'Product 6', price: 35 },
-//   { id: 7, name: 'Product 7', price: 40 },
-//   { id: 8, name: 'Product 8', price: 45 },
-//   { id: 9, name: 'Product 9', price: 50 },
-// ]
-
 export default function ProductListing() {
   const [fetchFailed, setFetchFailed] = useState(false)
   const [isLoading, setIsLoading] = useState(true)

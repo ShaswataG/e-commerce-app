@@ -5,7 +5,7 @@ const productModel = require('../models/productsModel');
 
 const createUser = async (userInfo) => {
     try {
-        const { name, email, password, isAdmin, contactNumber } = userInfo;
+        const { name, email, password } = userInfo;
         
         const user = await userModel.findOne({ email: email });
         if (user)
@@ -17,8 +17,8 @@ const createUser = async (userInfo) => {
             name: name,
             email: email,
             password_hash: hashedPassword,
-            is_admin: isAdmin,
-            contact_number: contactNumber,
+            // is_admin: false,
+            // contact_number: contactNumber,
         })
         await newUser.save();
         const token = newUser.generateAuthToken();

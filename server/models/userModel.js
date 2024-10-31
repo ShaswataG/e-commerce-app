@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
     },
     contact_number: {
         type: String,
-        required: true,
+        required: false,
     },
     date_registered: {
         type: Date,
