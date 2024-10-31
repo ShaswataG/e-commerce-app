@@ -2,8 +2,11 @@ import NavLink from './NavLink'
 
 import GoToCart from '../Cart/GoToCart'
 import ButtonLink from '../shared/ButtonLink'
+import { useSelector } from 'react-redux'
 
 export default function Navbar() {
+  const { isAdmin } = useSelector(state => state.user)
+
   return (
     <header className="bg-white shadow">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -13,6 +16,7 @@ export default function Navbar() {
             <ul className="flex space-x-4">
               <NavLink href="/">Home</NavLink>
               <NavLink href="/products">Products</NavLink>
+              {isAdmin && <NavLink href='/admin/store'>Store</NavLink>}
               <NavLink href="about">About</NavLink>
               <NavLink href="/contact">Contact</NavLink>
             </ul>

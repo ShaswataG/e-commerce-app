@@ -11,6 +11,8 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import Products from './pages/Products'
 import Register from './pages/Register'
 import Terms from './pages/Terms'
+import Store from './pages/Store'
+import AdminLayout from './components/Layout/AdminLayout'
 
 function App() {
   return (
@@ -26,6 +28,9 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="terms" element={<Terms />} />
+          <Route path="admin" element={<AdminLayout />}>
+            <Route path="store" element={<Store />} />
+          </Route>
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>

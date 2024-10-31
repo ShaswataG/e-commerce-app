@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Product from './Product'
-import ProductListingHeader from './ProductListingHeader'
+import ProductListingHeader from '../shared/ProductListingHeader'
 import { setProducts } from '../../redux/products'
 
 import Pagination from '../shared/Pagination'
@@ -53,12 +53,12 @@ export default function ProductListing() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {isLoading && <h1>Loading products...</h1>}
         {
-          !isLoading && fetchFailed ? 
-            <h1>Couldn't load products</h1> 
+          !isLoading && fetchFailed ?
+            <h1>Couldn't load products</h1>
             :
             products.map(product => (
               <Product key={product.id} product={product} />
-            )) 
+            ))
         }
       </div>
       <Pagination currentPage={1} totalPages={1} onPageChange={() => {}} />
