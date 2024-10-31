@@ -37,7 +37,7 @@ export default function RegisterForm() {
         dispatch(setUser({
           email: formData.email,
           contactNumber: formData.contactNumber,
-          cart: formData.cart,
+          cart: [],
           token: response.data.data.token,
           userId: response.data.data.id,
           isAdmin: response.data.data.isAdmin,
