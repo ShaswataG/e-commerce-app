@@ -32,7 +32,7 @@ export default function LoginForm() {
       console.log('userData: ', formData);
       const response = await axios.post(`${apiBaseUrl}/api/users/login`, formData);
       console.log('Login successful', formData)
-      dispatch(setUser(response.data))
+      dispatch(setUser(response.data.data))
       navigate('/')
     }
   }

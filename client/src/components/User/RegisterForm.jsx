@@ -33,14 +33,14 @@ export default function RegisterForm() {
       } else {
         console.log('userData: ', formData);
         const response = await axios.post(`${apiBaseUrl}/api/users/register`, formData);
-        console.log('Registration successful', response.data)
+        console.log('Registration successful', response.data.data)
         dispatch(setUser({
           email: formData.email,
           contactNumber: formData.contactNumber,
           cart: formData.cart,
-          token: response.data.token,
-          userId: response.data.id,
-          isAdmin: response.data.isAdmin,
+          token: response.data.data.token,
+          userId: response.data.data.id,
+          isAdmin: response.data.data.isAdmin,
         }))
         navigate('/')
       }
