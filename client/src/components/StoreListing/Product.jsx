@@ -18,7 +18,7 @@ export default function Product({ product }) {
     </div>
     <h3 className='text-xl font-semibold'>{product.name}</h3>
     <p className='text-lg text-gray-600'>{formatPrice(product.price)}</p>
-    <p className='text-lg text-gray-600'>Quantity: {product.quantity}</p>
+    <p className='text-lg text-gray-600'>Inventory: {product.inventory}</p>
   </div>
   )
 }
@@ -28,7 +28,7 @@ Product.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    quantity: PropTypes.number.isRequired,
+    inventory: PropTypes.number.isRequired,
   }).isRequired,
   showDelete: PropTypes.bool,
 }
