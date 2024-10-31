@@ -19,6 +19,7 @@ const products = [
   { id: 7, name: 'Product 7', price: 40 },
   { id: 8, name: 'Product 8', price: 45 },
   { id: 9, name: 'Product 9', price: 50 },
+  { id: 10, name: 'Product 10', price: 50 },
 ]
 
 export default function ProductListing() {
@@ -37,7 +38,7 @@ export default function ProductListing() {
       <ProductListingHeader itemCount={12} />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map(product => (
-          <Product key={product.id} product={product} />
+          <Product key={product.id} product={product} showAdd />
         ))}
       </div>
       <Pagination currentPage={1} totalPages={1} onPageChange={() => {}} />
