@@ -1,17 +1,8 @@
-import { useState } from 'react'
+import PropTypes from 'prop-types'
 
-export default function Counter() {
-  const [count, setCount] = useState(0)
-
-  const increment = () => setCount(count + 1)
-  const decrement = () => {
-    if (count > 0) {
-      setCount(count - 1)
-    }
-  }
-
+export default function Counter({ count = 0, increment, decrement }) {
   return (
-    <div className="flex items-center mt-2">
+    <div className="flex items-center">
       <button
         className={`border px-4 py-2 rounded-l focus:outline-none ${count === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
         onClick={decrement}
@@ -19,10 +10,16 @@ export default function Counter() {
       >
         -
       </button>
-      <span className="border-x px-4">{count}</span>
+      <span className="border-y px-4 py-2">{count}</span>
       <button className="border px-4 py-2 rounded-r focus:outline-none" onClick={increment}>
         +
       </button>
     </div>
   )
+}
+
+Counter.propTypes = {
+  count: PropTypes.number,
+  increment: PropTypes.func.isRequired,
+  decrement: PropTypes.func.isRequired,
 }

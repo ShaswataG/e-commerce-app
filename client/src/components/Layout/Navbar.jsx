@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import NavLink from './NavLink'
 
 import GoToCart from '../Cart/GoToCart'
 import ButtonLink from '../shared/ButtonLink'
@@ -11,26 +11,10 @@ export default function Navbar() {
           <h1 className="text-2xl font-bold">E-Commerce</h1>
           <nav>
             <ul className="flex space-x-4">
-              <li>
-                <Link to="/" className="text-gray-600 hover:text-blue-500">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="text-gray-600 hover:text-blue-500">
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-gray-600 hover:text-blue-500">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-600 hover:text-blue-500">
-                  Contact
-                </Link>
-              </li>
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="/products">Products</NavLink>
+              <NavLink href="about">About</NavLink>
+              <NavLink href="/contact">Contact</NavLink>
             </ul>
           </nav>
         </div>
