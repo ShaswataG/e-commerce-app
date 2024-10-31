@@ -20,14 +20,16 @@ const getProduct = async (productId) => {
 }
 
 const getProducts = async (productQuery) => {
-    // try {
-    //     let { name } = productQuery;
-    //     name = name.
-    //     await productModel.find(productQuery);
-
-    // } catch (error) {
-    //     throw new Error(error.message);
-    // }
+    try {
+        let { name } = productQuery;
+        const query = { $text: { $search: name } };
+        const products = await productModel.find(query);
+        console.log('products:', products);
+        return products;
+    } catch (error) {
+        console.error(error.message);
+        throw new Error(error.message);
+    }
 }
 
 const updateProduct = async (productId, productInfo) => {
