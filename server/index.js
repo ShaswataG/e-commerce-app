@@ -2,18 +2,23 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require("cors");
 require('dotenv').config();
-const { productRouter } = require('./routes/productRoutes');
-const isAuth = require("./middleware/auth");
 
+const productRouter = require('./routes/productRoutes');
+const orderRouter = require('./routes/orderRoutes');
+const userRouter = require('./routes/userRoutes');
+
+const isAuth = require("./middlewares/auth");
 const app = express();
 const port = process.env.PORT || 4000;
 const uri = process.env.URI;
 
-app.use(isAuth);
+// app.use(isAuth);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use('/api/users', userRouter)
 app.use('/api/products', productRouter);
+app.use('/api/orders', orderRouter);
 
 (async () => {
     try {
