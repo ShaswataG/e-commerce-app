@@ -2,10 +2,22 @@ import NavLink from './NavLink'
 
 import GoToCart from '../Cart/GoToCart'
 import ButtonLink from '../shared/ButtonLink'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import Button from '../shared/Button'
+import { logoutUser } from '../../redux/user'
+import { useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
-  const { isAdmin } = useSelector(state => state.user)
+  const { isAdmin, userId } = useSelector(state => state.user)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const isLoggedIn = !!userId
+
+  const logoutHandler=()=> {
+    dispatch(logoutUser())
+    navigate('/')
+  }
 
   return (
     <header className="bg-white shadow">
@@ -23,8 +35,9 @@ export default function Navbar() {
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <ButtonLink href="/register">Register</ButtonLink>
-          <ButtonLink href="/login">Sign in</ButtonLink>
+          {!isLoggedIn && <ButtonLink href='/register'>Register</ButtonLink>}
+          {!isLoggedIn && <ButtonLink href='/login'>Sign in</ButtonLink>}
+          {isLoggedIn && <Button onClick={logoutHandler}>Logout</Button>}
           <GoToCart />
         </div>
       </div>
