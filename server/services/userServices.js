@@ -78,6 +78,40 @@ const addToCart = async (userId, productId, quantity) => {
             throw new Error('User not found');
         if (!product)
             throw new Error('Product not found');
+
+        const itemIndex = user.cart.findIndex(item => {
+            console.log(typeof(productId));
+            console.log(typeof(item.product_id))
+            console.log(item.product_id);
+            return item.product_id == productId
+        });
+        console.log('itemIndex: ', itemIndex);
+        if (itemIndex !== -1) {
+            user.cart[itemIndex].quantity += quantity;
+        } else {
+            user.cart.push({
+                product_id: productId,
+                quantity: quantity,
+            })
+        }
+        await userModel.findByIdAndUpdate(userId, user);
+    } catch (error) {
+        console.error(error);
+        throw new Error("Failed to add item to cart");
+    }
+}
+
+
+const removeFromCart = async (userId, productId, quantity) => {
+    try {
+        console.log('userServices.addToCart');
+        const user = await userModel.findById(userId);
+        const product = await productModel.findById(productId);
+
+        if (!user)
+            throw new Error('User not found');
+        if (!product)
+            throw new Error('Product not found');
         const itemIndex = user.cart.findIndex(item => item.product_id === productId);
         if (itemIndex !== -1) {
             user.cart[itemIndex].quantity += quantity;
