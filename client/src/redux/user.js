@@ -19,7 +19,7 @@ const userSlice = createSlice({
       state.isAdmin = action.payload.isAdmin
       state.email = action.payload.email
       state.contactNumber = action.payload.contactNumber
-      state.cart = action.payload.cart
+      state.cart = action.payload.cart.map(product => ({ ...product, id: product.product_id}))
     },
     logoutUser: () => initialState
   }
