@@ -3,11 +3,13 @@ import axios from 'axios'
 import { validateUserRegistration } from '../../utils/validations/user'
 import TextField from '../shared/formFields/TextField'
 import { useNavigate } from 'react-router-dom'
-
-const baseUrl = process.env.REACT_APP_BASE_URL
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/user'
+import { apiBaseUrl } from '../../constants'
 
 export default function RegisterForm() {
   const navigate=useNavigate()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     email: '',
     name: '',
@@ -30,17 +32,17 @@ export default function RegisterForm() {
         setErrors(validationErrors)
       } else {
         console.log('userData: ', formData);
-  
-        console.log('Registration successful', formData)
-        const response = await axios.post(baseUrl+'/api/users/register', formData);
-        console.log(response.data);
-        setFormData({
-          email: '',
-          name: '',
-          password: '',
-          confirmPassword: '',
-        })
-        setErrors({})
+        const response = await axios.post(`${apiBaseUrl}/api/users/register`, formData);
+        console.log('Registration successful', response.data)
+        dispatch(setUser({
+          email: formData.email,
+          contactNumber: formData.contactNumber,
+          cart: formData.cart,
+          token: response.data.token,
+          userId: response.data.id,
+          isAdmin: response.data.isAdmin,
+        }))
+        navigate('/')
       }
     } catch (error) {
       console.error('registration failed');

@@ -2,8 +2,15 @@ import { useState } from 'react'
 
 import { validateUserLogin } from '../../utils/validations/user'
 import TextField from '../shared/formFields/TextField'
+import axios from 'axios'
+import { apiBaseUrl } from '../../constants'
+import { setUser } from '../../redux/user'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 export default function LoginForm() {
+  const navigate=useNavigate()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,18 +23,17 @@ export default function LoginForm() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
     const validationErrors = validateUserLogin(formData)
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
     } else {
+      console.log('userData: ', formData);
+      const response = await axios.post(`${apiBaseUrl}/api/users/login`, formData);
       console.log('Login successful', formData)
-      setFormData({
-        email: '',
-        password: '',
-      })
-      setErrors({})
+      dispatch(setUser(response.data))
+      navigate('/')
     }
   }
 
