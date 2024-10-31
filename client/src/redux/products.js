@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
-const productSlice = createSlice({
-  name: 'product',
+const productsSlice = createSlice({
+  name: 'products',
   initialState: {
     products: [],
     // {
@@ -19,4 +19,4 @@ const productSlice = createSlice({
   },
 })
 
-export default productSlice.reducer
+export default productsSlice.reducer;
