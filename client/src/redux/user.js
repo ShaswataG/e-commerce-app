@@ -15,6 +15,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.jwt = action.payload.token
+      state.jwt = action.payload.token
       state.userId = action.payload.userId
       state.isAdmin = action.payload.isAdmin
       state.email = action.payload.email

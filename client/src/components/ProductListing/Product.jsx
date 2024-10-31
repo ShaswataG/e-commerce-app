@@ -9,6 +9,11 @@ import { formatPrice } from '../../utils/common'
 export default function Product({ product, showAdd, showDelete }) {
   const [count, setCount] = useState(0)
 
+
+  const modifyCart = () => {
+    
+  }
+
   const increment = () => setCount(count + 1)
   const decrement = () => {
     if (count > 0) {
