@@ -2,10 +2,12 @@ import { useState } from 'react'
 import axios from 'axios'
 import { validateUserRegistration } from '../../utils/validations/user'
 import TextField from '../shared/formFields/TextField'
+import { useNavigate } from 'react-router-dom'
 
 const baseUrl = process.env.REACT_APP_BASE_URL
 
 export default function RegisterForm() {
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     email: '',
     name: '',
@@ -42,6 +44,7 @@ export default function RegisterForm() {
       }
     } catch (error) {
       console.error('registration failed');
+      navigate('/error')
     }
   }
 
