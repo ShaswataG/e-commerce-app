@@ -31,7 +31,7 @@ const createUser = async (userInfo) => {
         return data;
     } catch (error) {
         console.error(error);
-        throw new Error("User registration failed");
+        throw new Error(error.message);
     }
 }
 
@@ -83,7 +83,7 @@ const modifyCart = async (userId, productId, count) => {
             throw new Error('User not found');
         if (!product)
             throw new Error('Product not found');
-
+        console.log('product: ', product);
         if (count === 0) {
             filteredCart = user.cart.filter(item => item.product_id != productId);
             user.cart = filteredCart;
@@ -97,9 +97,11 @@ const modifyCart = async (userId, productId, count) => {
             console.log('itemIndex: ', itemIndex);
             if (itemIndex !== -1) {
                 user.cart[itemIndex].quantity = count;
+                user.cart[itemIndex].price = count * product.price;
             } else {
                 user.cart.push({
                     product_id: productId,
+                    price: product.price * count,
                     quantity: count,
                 })
             }

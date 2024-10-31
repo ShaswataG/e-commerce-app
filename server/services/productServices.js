@@ -19,8 +19,15 @@ const getProduct = async (productId) => {
     return await productModel.findById(productId);
 }
 
-const getProducts = async () => {
-    return await productModel.find();
+const getProducts = async (productQuery) => {
+    // try {
+    //     let { name } = productQuery;
+    //     name = name.
+    //     await productModel.find(productQuery);
+
+    // } catch (error) {
+    //     throw new Error(error.message);
+    // }
 }
 
 const updateProduct = async (productId, productInfo) => {
