@@ -1,8 +1,10 @@
 import { FaShoppingCart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export default function GoToCart() {
-  const { cartItemCount } = {}
+  const { cart } = useSelector(state => state.user)
+  const { cartItemCount } = cart.length
 
   return (
     <Link to="/cart" className="relative flex items-center h-full">
