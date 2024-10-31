@@ -29,12 +29,12 @@ const getUser = async (req, res) => {
     }
 }
 
-const addToCart = async (req, res) => {
+const modifyCart = async (req, res) => {
     try {
-        console.log('userController.addToCart');
+        console.log('userController.modifyCart');
         console.log('req.user: ', req.user);
-        console.log('req.body: ', req.body);
-        const data = await userService.addToCart(req.user.id, req.body.productId, req.body.quantity);
+        console.log('req.body.quantity: ', req.body.quantity);
+        const data = await userService.modifyCart(req.user.id, req.body.productId, req.body.quantity);
         res.status(201).json({ data: data });
     } catch (error) {
         console.error(error);
@@ -57,6 +57,6 @@ module.exports = {
     createUser,
     loginUser,
     getUser,
-    addToCart,
+    modifyCart,
     getCart
 }
