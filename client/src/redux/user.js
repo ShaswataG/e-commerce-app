@@ -7,17 +7,17 @@ const userSlice = createSlice({
     isAdmin: false,
     email: '',
     contactNumber: '',
-    cart: []
+    cart: [],
   },
   reducers: {
     setUser: (state, action) => {
-        state.userId = action.payload.userId;
-        state.isAdmin = action.payload.isAdmin;
-        state.email = action.payload.email;
-        state.contactNumber = action.payload.contactNumber;
-        state.cart = action.payload.cart
-    }
-  }
+      state.userId = action.payload.userId
+      state.isAdmin = action.payload.isAdmin
+      state.email = action.payload.email
+      state.contactNumber = action.payload.contactNumber
+      state.cart = action.payload.cart
+    },
+  },
 })
 
-export default userSlice.reducer;
+export default userSlice.reducer

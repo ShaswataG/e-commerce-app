@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Product from './Product'
 import ProductListingHeader from './ProductListingHeader'
@@ -22,15 +22,13 @@ const products = [
 ]
 
 export default function ProductListing() {
-  
-  
-  
+  const [fetchFailed, setFetchFailed] = useState(false)
+  const [loading, setLoading] = useState(true)
+
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(baseUrl + '/api/products')
-    } catch (error) {
-
-    }
+      const response = await axios.get(`${baseUrl}/api/products`)
+    } catch (error) {}
   }
 
   useEffect(() => {}, [])
