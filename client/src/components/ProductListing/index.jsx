@@ -7,8 +7,7 @@ import ProductListingHeader from '../shared/ProductListingHeader'
 import { setProducts } from '../../redux/products'
 
 import Pagination from '../shared/Pagination'
-
-const baseUrl = process.env.REACT_APP_BASE_URL
+import { apiBaseUrl } from '../../constants'
 
 export default function ProductListing() {
   const [fetchFailed, setFetchFailed] = useState(false)
@@ -16,13 +15,12 @@ export default function ProductListing() {
 
 
   const { products } = useSelector(state => state.products)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/api/products`)
+      const response = await axios.get(`${apiBaseUrl}/api/products`)
       console.log('response.data.data: ', response.data.data)
-      console.log('products: ', products)
       dispatch(setProducts(response.data.data))
 
     } catch (error) {
@@ -35,6 +33,9 @@ export default function ProductListing() {
   useEffect(() => {
     fetchProducts()
   }, [])
+
+  console.log('products: ', products)
+
   return (
     <div className="relative w-full flex flex-col flex-grow gap-8">
       <ProductListingHeader itemCount={products.length} />
