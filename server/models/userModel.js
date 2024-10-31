@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
         {
             product_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
             quantity: { type: Number, required: true },
+            price: { type: Number, required: true }
         },
     ],
     orders: {
