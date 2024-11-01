@@ -1,8 +1,8 @@
-const userService = require('../services/userServices');
+const userServices = require('../services/userServices');
 
 const createUser = async (req, res) => {
     try {
-        const data = await userService.createUser(req.body);
+        const data = await userServices.createUser(req.body);
         res.status(201).json({ data: data });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const data = await userService.loginUser(email, password);
+        const data = await userServices.loginUser(email, password);
         res.status(200).json({ data: data });
     } catch (error) {
         // consol
@@ -22,7 +22,7 @@ const loginUser = async (req, res) => {
 
 const getUser = async (req, res) => {
     try {
-        const data = await userService.getUser(req.params.id);
+        const data = await userServices.getUser(req.params.id);
         res.status(200).json({ data: data });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -34,7 +34,7 @@ const modifyCart = async (req, res) => {
         console.log('userController.modifyCart');
         console.log('req.user: ', req.user);
         console.log('req.body.quantity: ', req.body.quantity);
-        const data = await userService.modifyCart(req.user.id, req.body.productId, req.body.quantity);
+        const data = await userServices.modifyCart(req.user.id, req.body.productId, req.body.quantity);
         res.status(201).json({ data: data });
     } catch (error) {
         console.error(error);
@@ -46,7 +46,7 @@ const getCart = async (req, res) => {
     try {
         console.log('userControllers.getCart: ');
         console.log('req.user: ', req.user);
-        const data = await userService.getCart(req.user.id);
+        const data = await userServices.getCart(req.user.id);
         res.status(200).json({ data: data });
     } catch (error) {
         res.status(500).json({ message: error.message });

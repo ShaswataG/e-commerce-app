@@ -7,10 +7,6 @@ const orderSchema = new mongoose.Schema({
         required: true,
         index: true
     },
-    name: {
-        type: String,
-        required: true
-    },
     billing_address: {
         type: "String",
         required: true
@@ -56,11 +52,6 @@ const orderSchema = new mongoose.Schema({
                 },
             message: 'Total price must match the sum of item quantities and prices'
         }
-    },
-    inventory: {
-        type: Number,
-        required: true,
-        min: 1
     },
     order_date: {
         type: Date,
