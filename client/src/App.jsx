@@ -8,6 +8,7 @@ import Contact from './pages/Contact'
 import Error from './pages/Error'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Orders from './pages/Orders'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Products from './pages/Products'
 import Register from './pages/Register'
@@ -23,6 +24,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="orders" element={<Orders />} />
           <Route path="products" element={<Products />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />

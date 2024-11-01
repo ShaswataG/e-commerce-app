@@ -1,27 +1,12 @@
-import axios from 'axios'
+import PropTypes from 'prop-types'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import { apiBaseUrl } from '../../constants'
-import { setCart } from '../../redux/user'
-import { getAuthHeaders } from '../../utils/common'
 import Product from '../ProductListing/Product'
 
-export default function CartItems() {
+export default function CartItems({ fetchCart }) {
   const user = useSelector(state => state.user)
   console.log('user: ', user)
-  const authHeaders = getAuthHeaders()
-  const dispatch = useDispatch()
-
-  const fetchCart = async () => {
-    try {
-      const response = await axios.get(`${apiBaseUrl}/api/users/cart`, authHeaders)
-      console.log('response.data.data(cart): ', response.data.data)
-      dispatch(setCart(response.data.data))
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   useEffect(() => {
     // if (user.cart.length === 0) {
@@ -40,4 +25,8 @@ export default function CartItems() {
       ))}
     </div>
   )
+}
+
+CartItems.propTypes = {
+  fetchCart: PropTypes.func.isRequired,
 }

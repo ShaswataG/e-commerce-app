@@ -26,9 +26,10 @@ export default function Navbar() {
         <div className="flex items-center gap-6">
           <h1 className="text-2xl font-bold">E-Commerce</h1>
           <nav>
-            <ul className="flex space-x-4">
+            <ul className="flex space-x-8">
               <NavLink href="/">Home</NavLink>
               <NavLink href="/products">Products</NavLink>
+              {isLoggedIn && <NavLink href="/orders">Orders</NavLink>}
               {isAdmin && <NavLink href="/admin/store">Store</NavLink>}
               <NavLink href="about">About</NavLink>
               <NavLink href="/contact">Contact</NavLink>

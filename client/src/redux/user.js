@@ -41,45 +41,12 @@ const userSlice = createSlice({
       console.log('action.payload: ', action.payload)
       state.cart = action.payload
     },
-    incrementCartItem: (state, action) => {
-      state.cart = state.cart.map(cartItem => {
-        if (cartItem.product_id === action.payload) {
-          return {
-            ...cartItem,
-            quantity: cartItem.quantity + 1,
-          }
-        }
-        return cartItem
-      })
-    },
-    decrementCartItem: (state, action) => {
-      state.cart = state.cart.map(cartItem => {
-        if (cartItem.product_id === action.payload) {
-          return {
-            ...cartItem,
-            quantity: cartItem.quantity + 1,
-          }
-        }
-        return cartItem
-      })
-    },
     addCartItem: (state, action) => {
       state.cart = [...state.cart, action.payload]
-    },
-    removeCartItem: (state, action) => {
-      state.cart = state.cart.filter(cartItem => cartItem.product_id !== action.payload)
     },
   },
 })
 
-export const {
-  addCartItem,
-  setCart,
-  incrementCartItem,
-  decrementCartItem,
-  removeCartItem,
-  setUser,
-  logoutUser,
-} = userSlice.actions
+export const { addCartItem, setCart, setUser, logoutUser } = userSlice.actions
 
 export default userSlice.reducer
