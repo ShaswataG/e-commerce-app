@@ -1,5 +1,6 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
+import { useEffect } from 'react'
 import { FaTrash } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 
@@ -8,7 +9,6 @@ import Counter from './Counter'
 import { apiBaseUrl } from '../../constants'
 import { addCartItem, setCart } from '../../redux/user'
 import { formatPrice, getAuthHeaders } from '../../utils/common'
-import { useEffect } from 'react'
 
 // TODO handle out of stock
 
@@ -56,8 +56,7 @@ export default function Product({ product, showAdd, showDelete }) {
     modifyCart(0)
   }
 
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <div

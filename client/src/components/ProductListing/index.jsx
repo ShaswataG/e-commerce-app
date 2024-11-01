@@ -10,15 +10,13 @@ export default function ProductListing({ isLoading, fetchFailed }) {
   const user = useSelector(state => state.user)
   const { products } = useSelector(state => state.products)
 
-
-  const modifyProducts = (products) => {
+  const modifyProducts = products => {
     // console.log('modifyProducts: ', products);
     return products.map(product => {
       // console.log(product)
-      let quantity = 0;
+      let quantity = 0
       user.cart.forEach(item => {
-        if (item.product_id == product.id)
-          quantity = item.quantity
+        if (item.product_id === product.id) quantity = item.quantity
       })
       // console.log({
       //   ...product,
@@ -27,12 +25,12 @@ export default function ProductListing({ isLoading, fetchFailed }) {
       return {
         ...product,
         product_id: product.id,
-        quantity
+        quantity,
       }
     })
   }
 
-  let modifiedProducts = modifyProducts(products);
+  const modifiedProducts = modifyProducts(products)
 
   return (
     <div className="relative w-full flex flex-col flex-grow gap-8">
@@ -41,13 +39,13 @@ export default function ProductListing({ isLoading, fetchFailed }) {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {isLoading && <h1>Loading products...</h1>}
-        {!isLoading && fetchFailed ? 
-          (<h1>Could&#39;t load products</h1>) 
-          : 
-          (modifiedProducts.map(modifiedProduct => {
+        {!isLoading && fetchFailed ? (
+          <h1>Could&#39;t load products</h1>
+        ) : (
+          modifiedProducts.map(modifiedProduct => {
             return <Product key={modifiedProduct.id} product={modifiedProduct} showDelete />
-          }))
-        }
+          })
+        )}
       </div>
       <Pagination currentPage={1} totalPages={1} onPageChange={() => {}} />
     </div>
