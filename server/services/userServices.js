@@ -118,13 +118,13 @@ const modifyCart = async (userId, productId, count) => {
 const getCart = async (userId) => {
     try {
         console.log('userService.getCart');
-        console.log('userId: ', userId);
+        // console.log('userId: ', userId);
         const data = await userModel.findById(userId);
-        console.log('cart data: ', data.cart);
+        // console.log('cart data: ', data.cart);
         let res = []
         const cart = await Promise.all(data.cart.map(async item => {
             const itemInfo = await productModel.findById(item.product_id)
-            console.log('itemInfo: ', itemInfo)
+            // console.log('itemInfo: ', itemInfo)
             // if (itemInfo) {
             //     return {
             //         product_id: itemInfo.product_id,
