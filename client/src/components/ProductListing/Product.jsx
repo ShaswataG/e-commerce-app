@@ -8,6 +8,7 @@ import Counter from './Counter'
 import { apiBaseUrl } from '../../constants'
 import { addCartItem, setCart } from '../../redux/user'
 import { formatPrice, getAuthHeaders } from '../../utils/common'
+import { useEffect } from 'react'
 
 // TODO handle out of stock
 
@@ -54,6 +55,9 @@ export default function Product({ product, showAdd, showDelete }) {
   const remCartItem = () => {
     modifyCart(0)
   }
+
+  useEffect(() => {
+  }, [])
 
   return (
     <div

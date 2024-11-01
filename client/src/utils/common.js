@@ -25,3 +25,8 @@ export const getAuthHeaders = () => ({
 })
 
 export const getCartItem = (cart, id) => cart.find(item => item.product_id === id)
+
+// export const modifyProducts = (products) => {
+//   const { user } = useSelector(state => state.user) 
+//   return
+// }
