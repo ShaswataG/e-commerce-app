@@ -39,13 +39,20 @@ export default function OrderListing() {
 
   return (
     <div className="relative w-full flex flex-col flex-grow gap-8">
-      <div className="max-w-lg mx-auto mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
         {isLoading && <h1>Loading products...</h1>}
         {!isLoading && fetchFailed ? (
           <h1>Could&#39;t load orders</h1>
         ) : (
           orders.map(order => (
-            <Order key={order.orderNumber} orderNumber={order.orderNumber} items={order.items} />
+            <Order
+              key={order.id}
+              orderNumber={order.id}
+              items={order.items}
+              orderDate={order.order_date}
+              billingAddress={order.billing_address}
+              totalPrice={order.total_price}
+            />
           ))
         )}
       </div>

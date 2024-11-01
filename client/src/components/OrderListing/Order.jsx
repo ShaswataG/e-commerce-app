@@ -1,16 +1,31 @@
 import PropTypes from 'prop-types'
 
-export default function Order({ orderNumber, items }) {
+import { formatPrice } from '../../utils/common'
+
+export default function Order({ orderNumber, items, orderDate, billingAddress, totalPrice }) {
   return (
-    <div className="border border-gray-300 p-4 rounded-lg shadow-md mb-4">
-      <h2 className="text-xl font-semibold mb-2">Order No: {orderNumber}</h2>
-      <ul className="list-disc pl-5">
+    <div className="bg-white border border-gray-300 p-6 rounded-lg shadow-lg mb-6 transition-transform transform hover:scale-105">
+      <h2 className="text-2xl font-bold text-blue-600 mb-3">Order #{orderNumber}</h2>
+      <p className="text-gray-700 mb-2">
+        <strong>Order placed on:</strong>{' '}
+        {orderDate.replace('T', ' ').replace('Z', '').slice(0, 19)}
+      </p>
+      <p className="text-gray-700 mb-4">
+        <strong>Billing Address:</strong> {billingAddress}
+      </p>
+      <ul className="list-disc pl-5 mb-4">
         {items.map((item, index) => (
-          <li key={index} className="text-lg">
-            {item.name}: <span className="font-bold">{item.quantity}</span>
+          <li key={index} className="text-lg flex justify-between items-center text-lg">
+            <span>
+              {item.name}: {item.quantity}
+            </span>
+            <span className="text-green-600">{formatPrice(item.price)}</span>
           </li>
         ))}
       </ul>
+      <p className="text-xl font-bold text-gray-800">
+        Total Price: <span className="text-red-600">{formatPrice(totalPrice)}</span>
+      </p>
     </div>
   )
 }
@@ -20,7 +35,13 @@ Order.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       quantity: PropTypes.number.isRequired,
+      orderDate: PropTypes.string.isRequired,
+      billingAddress: PropTypes.string.isRequired,
+      totalPrice: PropTypes.number.isRequired,
     }),
   ).isRequired,
   orderNumber: PropTypes.string.isRequired,
+  orderDate: PropTypes.string.isRequired,
+  billingAddress: PropTypes.string.isRequired,
+  totalPrice: PropTypes.string.isRequired,
 }
