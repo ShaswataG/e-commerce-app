@@ -10,17 +10,31 @@ const createOrder = async (userId, orderInfo) => {
         let itemsOrdered = [];
         let totalPrice = 0;
         console.log('cart: ', cart);
-        cart.forEach(item => {
+        // await Promise.all(cart.forEach(async item => {
+        //     totalPrice += item.price;
+        //     const product = await productModel.findById(item.product_id);
+        //     console.log('product: ', product)
+        //     itemsOrdered = [
+        //         ...itemsOrdered,
+        //         {
+        //             product_id: item.product_id,
+        //             name: product.name,
+        //             quantity: item.quantity,
+        //             price: item.price
+        //         }
+        //     ];
+        // }));
+        for (const item of cart) {
             totalPrice += item.price;
-            itemsOrdered = [
-                ...itemsOrdered,
-                {
-                    product_id: item.product_id,
-                    quantity: item.quantity,
-                    price: item.price
-                }
-            ];
-        });
+        
+            const product = await productModel.findById(item.product_id);
+            itemsOrdered.push({
+                product_id: item.product_id,
+                name: product.name,
+                quantity: item.quantity,
+                price: item.price
+                });
+            }
         console.log('itemsOrdered: ', itemsOrdered);
         const newOrder = new orderModel({
             user_id: userId,
@@ -28,9 +42,10 @@ const createOrder = async (userId, orderInfo) => {
             items: itemsOrdered,
             total_price: totalPrice
         });
-        console.log('newOrder: ', newOrder);
+        // console.log('newOrder: ', newOrder);
         await newOrder.save();
         emptyCart(userId);
+        return true
     } catch (error) {
         console.error(error.message);
         throw new Error(error.message);
