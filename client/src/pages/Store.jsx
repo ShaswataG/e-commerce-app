@@ -1,5 +1,5 @@
-import Search from '../components/shared/Search'
 import PageTitle from '../components/shared/PageTitle'
+import Search from '../components/shared/Search'
 import StoreListing from '../components/StoreListing'
 
 export default function Store() {

@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import AdminLayout from './components/Layout/AdminLayout'
 import Layout from './components/Layout/Layout'
 import About from './pages/About'
 import Cart from './pages/Cart'
@@ -10,9 +11,8 @@ import Login from './pages/Login'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Products from './pages/Products'
 import Register from './pages/Register'
-import Terms from './pages/Terms'
 import Store from './pages/Store'
-import AdminLayout from './components/Layout/AdminLayout'
+import Terms from './pages/Terms'
 
 function App() {
   return (

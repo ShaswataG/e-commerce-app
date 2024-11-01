@@ -6,13 +6,13 @@ const productModel = require('../models/productsModel');
 const createUser = async (userInfo) => {
     try {
         const { name, email, password } = userInfo;
-        
+
         const user = await userModel.findOne({ email: email });
         if (user)
             throw new Error("Email already registered");
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-    
+
         const newUser = new userModel({
             name: name,
             email: email,
@@ -22,7 +22,7 @@ const createUser = async (userInfo) => {
         })
         await newUser.save();
         const token = newUser.generateAuthToken();
-    
+
         const data = {
             token: token,
             id: newUser.id,
@@ -59,6 +59,7 @@ const loginUser = async (email, password) => {
         };
         return data;
     } catch (error) {
+        console.error(error.message)
         throw new Error(error.message);
     }
 }
@@ -81,7 +82,9 @@ const modifyCart = async (userId, productId, count) => {
         let filteredCart = [];
         if (!user)
             throw new Error('User not found');
-        if (!product)
+
+
+        if (!product && count !== 0)
             throw new Error('Product not found');
         console.log('product: ', product);
         if (count === 0) {
@@ -89,9 +92,6 @@ const modifyCart = async (userId, productId, count) => {
             user.cart = filteredCart;
         } else {
             const itemIndex = user.cart.findIndex(item => {
-                console.log(typeof(productId));
-                console.log(typeof(item.product_id))
-                console.log(item.product_id);
                 return item.product_id == productId;
             });
             console.log('itemIndex: ', itemIndex);
@@ -121,7 +121,32 @@ const getCart = async (userId) => {
         console.log('userId: ', userId);
         const data = await userModel.findById(userId);
         console.log('cart data: ', data.cart);
-        return data.cart;
+        let res = []
+        const cart = await Promise.all(data.cart.map(async item => {
+            const itemInfo = await productModel.findById(item.product_id)
+            console.log('itemInfo: ', itemInfo)
+            // if (itemInfo) {
+            //     return {
+            //         product_id: itemInfo.product_id,
+            //         name: itemInfo.name,
+            //         inventory: itemInfo.inventory,
+            //         quantity: item.quantity,
+            //         price: item.price,
+            //         isOutOfStock: itemInfo.inventory === 0 ? true : false
+            //     }
+            // } else {
+            return {
+                product_id: item.product_id,
+                name: (itemInfo) ? itemInfo.name : "Unavailable",
+                inventory: (itemInfo) ? itemInfo.inventory : 0,
+                quantity: item.quantity,
+                price: item.price,
+                isOutOfStock: (itemInfo) ? false : true
+            }
+            // }
+        }))
+        console.log('cart: ', cart);
+        return cart;
     } catch (error) {
         console.error(error);
         throw new Error("Failed to fetch cart");

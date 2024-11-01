@@ -1,5 +1,5 @@
-import RegisterForm from '../components/User/RegisterForm'
 import PageTitle from '../components/shared/PageTitle'
+import RegisterForm from '../components/User/RegisterForm'
 
 export default function Register() {
   return (

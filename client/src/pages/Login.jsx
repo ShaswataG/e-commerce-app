@@ -1,5 +1,5 @@
-import LoginForm from '../components/User/LoginForm'
 import PageTitle from '../components/shared/PageTitle'
+import LoginForm from '../components/User/LoginForm'
 
 export default function Login() {
   return (

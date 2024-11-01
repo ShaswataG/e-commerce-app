@@ -21,9 +21,15 @@ const getProduct = async (productId) => {
 
 const getProducts = async (productQuery) => {
     try {
-        let { name } = productQuery;
-        const query = { $text: { $search: name } };
-        const products = await productModel.find(query);
+        let { search } = productQuery;
+        console.log('productQuery: ', productQuery)
+        const query = { $text: { $search: search } };
+        let products
+        if (!search || search.trim() === "") {
+            products = await productModel.find();
+        } else {
+            products = await productModel.find(query);
+        }
         console.log('products:', products);
         return products;
     } catch (error) {
