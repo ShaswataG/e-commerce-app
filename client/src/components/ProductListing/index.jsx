@@ -9,7 +9,6 @@ import ProductListingCount from '../shared/ProductListingCount'
 export default function ProductListing({ isLoading, fetchFailed }) {
   const user = useSelector(state => state.user)
   const { products } = useSelector(state => state.products)
-  const dispatch = useDispatch()
 
 
   const modifyProducts = (products) => {
@@ -34,15 +33,6 @@ export default function ProductListing({ isLoading, fetchFailed }) {
   }
 
   let modifiedProducts = modifyProducts(products);
-
-
-
-
-  
-
-
-
-  console.log('products: ', products)
 
   return (
     <div className="relative w-full flex flex-col flex-grow gap-8">
