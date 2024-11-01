@@ -43,7 +43,7 @@ export default function ProductListing({ isLoading, fetchFailed }) {
           <h1>Could&#39;t load products</h1>
         ) : (
           modifiedProducts.map(modifiedProduct => {
-            return <Product key={modifiedProduct.id} product={modifiedProduct} showDelete />
+            return <Product key={modifiedProduct.id} product={modifiedProduct} />
           })
         )}
       </div>
