@@ -1,41 +1,13 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 
 import Product from './Product'
 
-import { apiBaseUrl } from '../../constants'
-import { setProducts } from '../../redux/products'
 import Pagination from '../shared/Pagination'
 import ProductListingCount from '../shared/ProductListingCount'
 
-export default function ProductListing() {
-  const [fetchFailed, setFetchFailed] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-
+export default function ProductListing({ isLoading, fetchFailed }) {
   const { products } = useSelector(state => state.products)
-  const dispatch = useDispatch()
-
-  const fetchProducts = async () => {
-    try {
-      const config = {
-        params: {
-          search: '',
-        },
-      }
-      const response = await axios.get(`${apiBaseUrl}/api/products`, config)
-      console.log('response.data.data: ', response.data.data)
-      dispatch(setProducts(response.data.data))
-    } catch (error) {
-      setFetchFailed(true)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchProducts()
-  }, [])
 
   console.log('products: ', products)
 
@@ -55,4 +27,9 @@ export default function ProductListing() {
       <Pagination currentPage={1} totalPages={1} onPageChange={() => {}} />
     </div>
   )
+}
+
+ProductListing.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  fetchFailed: PropTypes.bool.isRequired,
 }

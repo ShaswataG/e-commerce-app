@@ -1,24 +1,20 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import PropTypes from 'prop-types'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import Product from './Product'
 import ProductForm from './ProductForm'
 
 import { apiBaseUrl } from '../../constants'
-import { setProducts } from '../../redux/products'
 import { getAuthHeaders } from '../../utils/common'
 import Button from '../shared/Button'
 import Modal from '../shared/Modal'
 import Pagination from '../shared/Pagination'
 import ProductListingCount from '../shared/ProductListingCount'
 
-export default function StoreListing() {
-  const [fetchFailed, setFetchFailed] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-
+export default function StoreListing({ isLoading, fetchFailed, fetchProducts }) {
   const { products } = useSelector(state => state.products)
-  const dispatch = useDispatch()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentProduct, setCurrentProduct] = useState(undefined)
@@ -42,18 +38,6 @@ export default function StoreListing() {
     openModal()
   }
 
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(`${apiBaseUrl}/api/products`)
-      console.log('response.data.data: ', response.data.data)
-      dispatch(setProducts(response.data.data))
-    } catch (error) {
-      setFetchFailed(true)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   const deleteProduct = async prodId => {
     try {
       await axios.delete(`${apiBaseUrl}/api/products/${prodId}`, getAuthHeaders())
@@ -68,10 +52,6 @@ export default function StoreListing() {
     closeModal()
     fetchProducts()
   }
-
-  useEffect(() => {
-    fetchProducts()
-  }, [])
 
   console.log('products: ', products)
 
@@ -105,4 +85,10 @@ export default function StoreListing() {
       </Modal>
     </>
   )
+}
+
+StoreListing.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  fetchFailed: PropTypes.bool.isRequired,
+  fetchProducts: PropTypes.func.isRequired,
 }

@@ -25,3 +25,8 @@ export const getAuthHeaders = () => ({
 })
 
 export const getCartItem = (cart, id) => cart.find(item => item.product_id === id)
+
+export const getUrlSearchParam = search => {
+  const queryParams = new URLSearchParams(search)
+  return queryParams.get('search')
+}
