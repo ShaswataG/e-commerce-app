@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import CartItems from '../components/Cart/CartItems'
 import Button from '../components/shared/Button'
@@ -13,6 +14,7 @@ import { getAuthHeaders } from '../utils/common'
 
 export default function Cart() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
   const [billingAddress, setBillingAddress] = useState(false)
 
@@ -42,10 +44,12 @@ export default function Cart() {
         getAuthHeaders(),
       )
     } catch (error) {
-      console.error(error)
+      console.error('Error placing order', error)
+      navigate('/error')
     } finally {
       closeModal()
       fetchCart()
+      navigate('/orders')
     }
   }
 
@@ -55,7 +59,7 @@ export default function Cart() {
         <PageTitle title="Cart" />
         <CartItems fetchCart={fetchCart} />
         <div className="flex justify-center mt-auto">
-          <Button onClick={placeOrder}>Place Order</Button>
+          {cart.length > 0 && <Button onClick={placeOrder}>Place Order</Button>}
         </div>
       </div>
       <Modal onClose={closeModal} isOpen={showModal} title="Place Order">
