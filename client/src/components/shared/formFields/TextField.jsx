@@ -15,15 +15,26 @@ export default function TextField({
   return (
     <div>
       <FormFieldLabel name={name} label={label} />
-      <input
-        id={name}
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        className={`mt-1 block w-full border rounded-md p-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
-        required={!isOptional}
-      />
+      {type === 'textarea' ? (
+        <textarea
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          className={`mt-1 block w-full border rounded-md p-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+          required={!isOptional}
+        />
+      ) : (
+        <input
+          id={name}
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          className={`mt-1 block w-full border rounded-md p-2 ${error ? 'border-red-500' : 'border-gray-300'}`}
+          required={!isOptional}
+        />
+      )}
       <FormFieldError error={error} />
     </div>
   )

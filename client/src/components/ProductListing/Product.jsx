@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import Counter from './Counter'
 
 import { apiBaseUrl } from '../../constants'
-import { addCartItem, removeCartItem, setCart } from '../../redux/user'
+import { addCartItem, setCart } from '../../redux/user'
 import { formatPrice, getAuthHeaders } from '../../utils/common'
 
 // TODO handle out of stock
@@ -45,17 +45,14 @@ export default function Product({ product, showAdd, showDelete }) {
 
   const incCartItem = count => {
     modifyCart(count + 1)
-    // dispatch(incrementCartItem(product.product_id))
   }
 
   const decCartItem = count => {
     modifyCart(count - 1)
-    // dispatch(decrementCartItem(product.product_id))
   }
 
   const remCartItem = () => {
     modifyCart(0)
-    // dispatch(removeCartItem(product.product_id))
   }
 
   return (
