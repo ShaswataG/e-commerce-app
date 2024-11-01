@@ -45,29 +45,32 @@ const orderSchema = new mongoose.Schema({
         validate: {
             validator: function() {
                 let total = 0;
+                console.log('items: ', this.items)
                 this.items.forEach(item => {
-                    total += item.quantity * item.price;
+                    total += item.price;
                 });
-                return this.totalPrice === total;
+                console.log('this.total_price = ', this.total_price);
+                console.log('total = ', total);
+                return this.total_price === total;
                 },
             message: 'Total price must match the sum of item quantities and prices'
         }
     },
     order_date: {
         type: Date,
-        required: true,
         default: new Date()
     }
 })
 
-orderSchema.pre('save', (next) => {
-    let total_price = 0;
-    this.items.forEach(item => {
-        total_price += item.quantity * item.price;
-    })
-    this.total_price = total_price;
-    next();
-})
+// orderSchema.pre('save', (next) => {
+//     let total_price = 0;
+//     console.log('pre: items: ', this.items)
+//     this.items.forEach(item => {
+//         total_price += item.quantity * item.price;
+//     })
+//     this.total_price = total_price;
+//     next();
+// })
 
 const orderModel = new mongoose.model("Order", orderSchema);
 

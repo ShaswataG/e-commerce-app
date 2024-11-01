@@ -21,9 +21,7 @@ const isAuth = async (req, res, next) => {
     try {
         const decoded = await jwt.verify(token, process.env.SECRET_KEY);
         req.user = decoded;
-        console.log(req.user)
         req.isAuth = true;
-        console.log('end')
         next();
     } catch (error) {
         req.isAuth = false;

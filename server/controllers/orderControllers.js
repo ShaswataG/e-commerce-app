@@ -2,15 +2,11 @@ const orderServices = require('../services/orderServices');
 
 const createOrder = async (req, res) => {
     try {
-        const { userId, userName, billingAddress, items, totalPrice, inventory } = req.body;
+        const { billingAddress } = req.body;
         const data = await orderServices.createOrder(req.user.id, {
-            userId: userId,
             billingAddress: billingAddress,
-            items: items,
-            totalPrice: totalPrice,
-            inventory: inventory
         });
-        res.status(201).json({ data: "Placed order successfully" })
+        res.status(201).json({ data: "Order placed successfully" })
     } catch (error) {
         res.status(500).json({ message: "Failed to place order" });
     }

@@ -1,24 +1,44 @@
 const orderModel = require('../models/orderModel');
 const userModel = require('../models/userModel');
+const productModel = require('../models/productsModel');
 
 const createOrder = async (userId, orderInfo) => {
-    const { userName, billingAddress, items, totalPrice, inventory } = orderInfo;
-    const cart = await getCart(userId)
-    console.log('cart: ', cart)
-    const newOrder = new orderModel({
-        user_id: userId,
-        name: userName,
-        billing_address: billingAddress,
-        items: items,
-        total_price: totalPrice,
-        inventory: inventory
-    })
-    return await newOrder.save();
-    // return true
+    try {
+        const { billingAddress } = orderInfo;
+        const cart = await getCart(userId);
+        console.log('cart: ', cart)
+        let itemsOrdered = [];
+        let totalPrice = 0;
+        console.log('cart: ', cart);
+        cart.forEach(item => {
+            totalPrice += item.price;
+            itemsOrdered = [
+                ...itemsOrdered,
+                {
+                    product_id: item.product_id,
+                    quantity: item.quantity,
+                    price: item.price
+                }
+            ];
+        });
+        console.log('itemsOrdered: ', itemsOrdered);
+        const newOrder = new orderModel({
+            user_id: userId,
+            billing_address: billingAddress,
+            items: itemsOrdered,
+            total_price: totalPrice
+        });
+        console.log('newOrder: ', newOrder);
+        await newOrder.save();
+        emptyCart(userId);
+    } catch (error) {
+        console.error(error.message);
+        throw new Error(error.message);
+    }
 }
 
 const getOrders = async (userId) => {
-    return await orderModel.find();
+    return await orderModel.find({ user_id: userId });
 }
 
 const getCart = async (userId) => {
@@ -44,6 +64,17 @@ const getCart = async (userId) => {
     }
 }
 
+const emptyCart = async (userId) => {
+    try {
+        let user = await userModel.findById(userId);
+        let cart = [];
+        user.cart = cart
+        console.log('user: ', user)
+        await userModel.findByIdAndUpdate(userId, user);
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
 
 module.exports = {
     createOrder,
