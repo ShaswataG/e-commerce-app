@@ -30,7 +30,6 @@ const getProducts = async (productQuery) => {
         } else {
             products = await productModel.find(query);
         }
-        console.log('products:', products);
         return products;
     } catch (error) {
         console.error(error.message);
