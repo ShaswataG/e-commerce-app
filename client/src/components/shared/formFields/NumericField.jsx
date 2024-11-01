@@ -3,14 +3,7 @@ import PropTypes from 'prop-types'
 import FormFieldError from './FormFieldError'
 import FormFieldLabel from './FormFieldLabel'
 
-export default function NumericField({
-  name,
-  label,
-  value,
-  error,
-  isOptional = false,
-  onChange,
-}) {
+export default function NumericField({ name, label, value, error, isOptional = false, onChange }) {
   return (
     <div>
       <FormFieldLabel name={name} label={label} />
@@ -30,7 +23,6 @@ export default function NumericField({
 
 NumericField.propTypes = {
   name: PropTypes.string.isRequired,
-  type: PropTypes.string,
   label: PropTypes.string.isRequired,
   value: PropTypes.number,
   error: PropTypes.string,

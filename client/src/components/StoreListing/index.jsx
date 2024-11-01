@@ -1,15 +1,17 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Product from './Product'
-import ProductListingCount from '../shared/ProductListingCount'
-import Pagination from '../shared/Pagination'
+import ProductForm from './ProductForm'
+
 import { apiBaseUrl } from '../../constants'
 import { setProducts } from '../../redux/products'
-import { useDispatch, useSelector } from 'react-redux'
+import { getAuthHeaders } from '../../utils/common'
 import Button from '../shared/Button'
 import Modal from '../shared/Modal'
-import ProductForm from './ProductForm'
+import Pagination from '../shared/Pagination'
+import ProductListingCount from '../shared/ProductListingCount'
 
 export default function StoreListing() {
   const [fetchFailed, setFetchFailed] = useState(false)
@@ -19,24 +21,24 @@ export default function StoreListing() {
   const dispatch = useDispatch()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [productId, setProductId] = useState(undefined)
+  const [currentProduct, setCurrentProduct] = useState(undefined)
 
   const openModal = () => {
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
   const closeModal = () => {
-    setProductId(undefined)
-    setIsModalOpen(false);
-  };
+    setCurrentProduct(undefined)
+    setIsModalOpen(false)
+  }
 
   const addProduct = () => {
-    setProductId(undefined)
+    setCurrentProduct(undefined)
     openModal()
   }
 
-  const editProduct = (prodId) => {
-    setProductId(prodId)
+  const editProduct = prodId => {
+    setCurrentProduct(prodId)
     openModal()
   }
 
@@ -45,12 +47,26 @@ export default function StoreListing() {
       const response = await axios.get(`${apiBaseUrl}/api/products`)
       console.log('response.data.data: ', response.data.data)
       dispatch(setProducts(response.data.data))
-
     } catch (error) {
       setFetchFailed(true)
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const deleteProduct = async prodId => {
+    try {
+      await axios.delete(`${apiBaseUrl}/api/products/${prodId}`, getAuthHeaders())
+      console.log('Product deleted', prodId)
+      fetchProducts()
+    } catch (error) {
+      console.error('Error deleting product', error)
+    }
+  }
+
+  const onSaveProduct = () => {
+    closeModal()
+    fetchProducts()
   }
 
   useEffect(() => {
@@ -61,26 +77,31 @@ export default function StoreListing() {
 
   return (
     <>
-    <div className="relative w-full flex flex-col flex-grow gap-8">
-      <div className="relative w-full flex">
-        <ProductListingCount itemCount={12} />
-        <Button onClick={addProduct}>Add Product</Button>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {isLoading && <h1>Loading products...</h1>}
-        {
-          !isLoading && fetchFailed ?
-            <h1>Couldn't load products</h1>
-            :
+      <div className="relative w-full flex flex-col flex-grow gap-8">
+        <div className="relative w-full flex justify-between items-center">
+          <ProductListingCount itemCount={products.length} />
+          <Button onClick={addProduct}>Add Product</Button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {isLoading && <h1>Loading products...</h1>}
+          {!isLoading && fetchFailed ? (
+            <h1>Could&#39;t load products</h1>
+          ) : (
             products.map(product => (
-              <Product key={product.id} product={product} editProduct={editProduct} showDelete />
+              <Product
+                key={product.id}
+                product={product}
+                editProduct={() => editProduct(product)}
+                deleteProduct={deleteProduct}
+                showDelete
+              />
             ))
-        }
+          )}
+        </div>
+        <Pagination currentPage={1} totalPages={1} onPageChange={() => {}} />
       </div>
-      <Pagination currentPage={1} totalPages={1} onPageChange={() => {}} />
-    </div>
-      <Modal title={`Product`} isOpen={isModalOpen} onClose={closeModal}>
-        <ProductForm productId={productId} />
+      <Modal title="Product" isOpen={isModalOpen} onClose={closeModal}>
+        <ProductForm product={currentProduct} onSaveProduct={onSaveProduct} />
       </Modal>
     </>
   )

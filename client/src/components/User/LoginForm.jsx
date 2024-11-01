@@ -1,15 +1,15 @@
-import { useState } from 'react'
-
-import { validateUserLogin } from '../../utils/validations/user'
-import TextField from '../shared/formFields/TextField'
 import axios from 'axios'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
 import { apiBaseUrl } from '../../constants'
 import { setUser } from '../../redux/user'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { validateUserLogin } from '../../utils/validations/user'
+import TextField from '../shared/formFields/TextField'
 
 export default function LoginForm() {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     email: '',
@@ -24,16 +24,20 @@ export default function LoginForm() {
   }
 
   const handleSubmit = async e => {
-    e.preventDefault()
-    const validationErrors = validateUserLogin(formData)
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-    } else {
-      console.log('userData: ', formData);
-      const response = await axios.post(`${apiBaseUrl}/api/users/login`, formData);
-      console.log('Login successful', formData)
-      dispatch(setUser(response.data.data))
-      navigate('/')
+    try {
+      e.preventDefault()
+      const validationErrors = validateUserLogin(formData)
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors)
+      } else {
+        console.log('userData: ', formData)
+        const response = await axios.post(`${apiBaseUrl}/api/users/login`, formData)
+        console.log('Login successful', formData)
+        dispatch(setUser(response.data.data))
+        navigate('/')
+      }
+    } catch (error) {
+      console.error(error.message)
     }
   }
 
