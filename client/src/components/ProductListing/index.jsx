@@ -33,19 +33,23 @@ export default function ProductListing({ isLoading, fetchFailed }) {
   const modifiedProducts = modifyProducts(products)
 
   return (
-    <div className="relative w-full flex flex-col flex-grow gap-8">
+    <div className="relative w-full flex flex-col flex-grow gap-8 justify-between">
       <div className="relative w-full flex">
         <ProductListingCount itemCount={modifiedProducts.length} />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {isLoading && <h1>Loading products...</h1>}
-        {!isLoading && fetchFailed ? (
-          <h1>Could&#39;t load products</h1>
-        ) : (
-          modifiedProducts.map(modifiedProduct => {
-            return <Product key={modifiedProduct.id} product={modifiedProduct} />
-          })
-        )}
+      <div className='h-full'>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {isLoading && <h1>Loading products...</h1>}
+          {(!isLoading && fetchFailed) && (<h1>Couldn't load products</h1>)} 
+          {(!isLoading && !fetchFailed)
+            && 
+            (
+              modifiedProducts.map(modifiedProduct => {
+                return <Product key={modifiedProduct.id} product={modifiedProduct} />
+              }
+            )
+          )}
+          </div>
       </div>
       <Pagination currentPage={1} totalPages={1} onPageChange={() => {}} />
     </div>

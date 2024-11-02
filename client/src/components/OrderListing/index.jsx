@@ -33,7 +33,7 @@ export default function OrderListing() {
     fetchOrders()
   }, [])
 
-  if (!fetchFailed && orders.length === 0) {
+  if ((!isLoading && !fetchFailed ) && orders.length === 0) {
     return <p className="text-center">No items in the cart</p>
   }
 

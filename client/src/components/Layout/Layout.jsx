@@ -15,18 +15,22 @@ export default function Layout() {
   const authHeaders = getAuthHeaders()
 
   const fetchCart = async () => {
-    if (getLocalStorage('token')) {
-      const response = await axios.get(`${apiBaseUrl}/api/users/cart`, authHeaders)
-      dispatch(
-        setUser({
-          email: getLocalStorage('email'),
-          cart: response.data.data || [],
-          token: getLocalStorage('token'),
-          id: getLocalStorage('userId'),
-          isAdmin: getLocalStorage('isAdmin'),
-          contactNumber: getLocalStorage('contactNumber'),
-        }),
-      )
+    try {
+      if (getLocalStorage('token')) {
+        const response = await axios.get(`${apiBaseUrl}/api/users/cart`, authHeaders)
+        dispatch(
+          setUser({
+            email: getLocalStorage('email'),
+            cart: response.data.data || [],
+            token: getLocalStorage('token'),
+            id: getLocalStorage('userId'),
+            isAdmin: getLocalStorage('isAdmin'),
+            contactNumber: getLocalStorage('contactNumber'),
+          }),
+        )
+      }
+    } catch (error) {
+      
     }
   }
 

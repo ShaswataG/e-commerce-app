@@ -41,7 +41,6 @@ export default function StoreListing({ isLoading, fetchFailed, fetchProducts }) 
   const deleteProduct = async prodId => {
     try {
       await axios.delete(`${apiBaseUrl}/api/products/${prodId}`, getAuthHeaders())
-      console.log('Product deleted', prodId)
       fetchProducts()
     } catch (error) {
       console.error('Error deleting product', error)
@@ -53,19 +52,18 @@ export default function StoreListing({ isLoading, fetchFailed, fetchProducts }) 
     fetchProducts()
   }
 
-  console.log('products: ', products)
-
   return (
     <>
-      <div className="relative w-full flex flex-col flex-grow gap-8">
+      <div className="relative w-full justify-between flex flex-col flex-grow gap-8">
         <div className="relative w-full flex justify-between items-center">
           <ProductListingCount itemCount={products.length} />
           <Button onClick={addProduct}>Add Product</Button>
         </div>
+        <div className='h-full'>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {isLoading && <h1>Loading products...</h1>}
+          {isLoading && <h1>Loading store...</h1>}
           {!isLoading && fetchFailed ? (
-            <h1>Could&#39;t load products</h1>
+            <h1>Couldn't load store</h1>
           ) : (
             products.map(product => (
               <Product
@@ -77,6 +75,7 @@ export default function StoreListing({ isLoading, fetchFailed, fetchProducts }) 
               />
             ))
           )}
+        </div>
         </div>
         <Pagination currentPage={1} totalPages={1} onPageChange={() => {}} />
       </div>

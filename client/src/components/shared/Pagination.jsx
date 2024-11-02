@@ -8,7 +8,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full">
       <button
         className={`border px-3 py-1 rounded ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
         onClick={() => handlePageChange(currentPage - 1)}

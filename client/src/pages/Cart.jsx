@@ -18,6 +18,9 @@ export default function Cart() {
   const [showModal, setShowModal] = useState(false)
   const [billingAddress, setBillingAddress] = useState(false)
 
+  const [isLoading, setIsLoading] = useState(true)
+  const [fetchFailed, setFetchFailed] = useState(false)
+
   const { cart } = useSelector(state => state.user)
 
   const authHeaders = getAuthHeaders()
@@ -33,6 +36,9 @@ export default function Cart() {
       dispatch(setCart(response.data.data))
     } catch (error) {
       console.error(error)
+      setFetchFailed(true)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -57,7 +63,7 @@ export default function Cart() {
     <>
       <div className="flex flex-col h-full gap-8 py-8 px-16">
         <PageTitle title="Cart" />
-        <CartItems fetchCart={fetchCart} />
+        <CartItems fetchCart={fetchCart} isLoading={isLoading} fetchFailed={fetchFailed} />
         <div className="flex justify-center mt-auto">
           {cart.length > 0 && <Button onClick={placeOrder}>Place Order</Button>}
         </div>
